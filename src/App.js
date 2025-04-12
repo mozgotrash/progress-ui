@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ProgressBar from './components/ProgressBar';
+import BookImage from './components/BookImage';
 import axios from 'axios'
 
 
@@ -12,7 +13,7 @@ const App = () => {
     const fetchProgress = async () => {
       try {
         
-        const { data } = await axios.get("http://localhost:8080/api/progress");
+        const { data } = await axios.get("http://localhost:8080/api/progress/current");
         
         const targetProgress = data;
 
@@ -25,9 +26,9 @@ const App = () => {
               clearInterval(intervalRef.current);
               return targetProgress;
             }
-            return prevProgress + 0.1;
+            return prevProgress + 2;
           });
-        }, 10);
+        }, 100);
 
 
       } catch (err) {
@@ -36,6 +37,7 @@ const App = () => {
     };
 
     fetchProgress();
+    
 
     // Очистка при размонтировании
     return () => {
@@ -49,9 +51,15 @@ const App = () => {
   if (error) return <div>Ошибка: {error}</div>;
 
   return (
-    <div style={{ padding: '20px', maxWidth: '1500px', margin: '0 auto' }}>
-      <h2>Прогресс: {progress.toFixed(3)}%</h2>
-      <ProgressBar progress={progress.toFixed(3)} />
+    <div>
+      <div style={{ padding: '20px', maxWidth: '1800px', margin: '0 auto' }}>
+        <h2>Прогресс: {progress.toFixed(3)}%</h2>
+        <ProgressBar progress={progress.toFixed(3)} />
+      </div>
+      <div>
+        <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Обложка книги</h3>
+        <BookImage />
+      </div>
     </div>
   );
 };
