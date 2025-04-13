@@ -21,7 +21,6 @@ const ProgressBar = ({progress}) => {
               fontSize: '20px',
             }}
           >
-            {progress}%
           </div>
         </div>
       );
