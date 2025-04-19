@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ProgressBar from './components/ProgressBar';
-import BookImage from './components/BookImage';
+import BooksComponent from './components/BooksComponent';
 import axios from 'axios'
 
 
 const App = () => {
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(null);
+  const [hoveredBookId, setHoveredBookId] = useState(null);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const App = () => {
             // Останавливаем, если достигли цели
             if (prevProgress >= targetProgress) {
               clearInterval(intervalRef.current);
+              setLoading(false);
               return targetProgress;
             }
             return prevProgress + 2;
@@ -48,26 +51,19 @@ const App = () => {
   return (
     <div style={{ padding: '20px', maxWidth: '1800px', margin: '0 auto' }}>
       <h2>Прогресс: {progress.toFixed(3)}%</h2>
-      <ProgressBar progress={progress.toFixed(3)} />
-      
-      <div style={{
-        display: 'flex',
-        overflowX: 'auto',
-        gap: '20px',
-        padding: '20px 0',
-        scrollbarWidth: 'none' /* Для Firefox */,
-        msOverflowStyle: 'none' /* Для IE и Edge */
-      }}>
-        {books.map((book) => (
-          <BookImage
-            key={book.id}
-            title={book.title}
-            author={book.author}
-            bookStatus={book.status}
-            imageBase64={book.base64Image}
-          />
-        ))}
-      </div>
+      <ProgressBar
+        loading={loading}
+        progress={progress.toFixed(3)}
+        books={books}
+        hoveredBookId={hoveredBookId}
+        onHover={setHoveredBookId}
+      />
+
+      <BooksComponent
+        books={books}
+        hoveredBookId={hoveredBookId}
+      />
+
       <style>{`
         ::-webkit-scrollbar {
           display: none; /* Для Chrome, Safari и Opera */
