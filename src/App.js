@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ProgressBar from './components/ProgressBar';
 import BooksComponent from './components/BooksComponent';
-import axios from 'axios'
-
+import api from './api'
 
 const App = () => {
   const [progress, setProgress] = useState(0);
@@ -16,7 +15,7 @@ const App = () => {
     const fetchProgress = async () => {
       //Прогресс бар
       try {
-        const { data } = await axios.get("http://localhost:8080/api/progress/current");
+        const { data } = await api.get("/api/progress/current");
         const targetProgress = data.progressPercentage;
         setBooks(data.goal.books)
         if (intervalRef.current) clearInterval(intervalRef.current);
