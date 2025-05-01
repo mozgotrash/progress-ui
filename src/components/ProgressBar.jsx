@@ -15,7 +15,7 @@ const ProgressBar = ({ loading, progress, books, onHover, hoveredBookId }) => {
               style={{
                 ...styles.bookItem,
                 width: `${book.percentageOfGoal}%`,
-                backgroundColor: hoveredBookId === book.id ? '#f0f0f0' : '#fff',
+                backgroundColor: hoveredBookId === book.id ? '#f0f0f0' : '#e0e0e0',
               }}
               onMouseEnter={() => onHover(book.id)}
               onMouseLeave={() => onHover(null)}
@@ -27,7 +27,7 @@ const ProgressBar = ({ loading, progress, books, onHover, hoveredBookId }) => {
               }}></div>
               <span style={{
                 ...styles.bookTitle,
-                color: hoveredBookId === book.id ? '#333' : '#333', // Всегда тёмный текст
+                color: hoveredBookId === book.id ? '#333' : '#333', 
                 fontWeight: hoveredBookId === book.id ? '600' : '400'
               }}>
                 {book.title}
@@ -61,17 +61,15 @@ const styles = {
   booksContainer: {
     display: 'flex',
     overflowX: 'auto',
-    backgroundColor: '#f5f5f5',
     margin: '10px 0',
-    borderRadius: '8px',
-    padding: '4px',
+    padding: '1px',
     gap: '1px'
   },
   bookItem: {
     height: '40px',
     textAlign: 'center',
     position: 'relative',
-    borderRight: '1px solid #e0e0e0',
+    borderRight: '1px solid white',
     ':last-child': {
       borderRight: 'none'
     },
@@ -82,8 +80,7 @@ const styles = {
     position: 'absolute',
     top: 0,
     left: 0,
-    transition: 'all 0.2s ease',
-    opacity: 0.7 // Полупрозрачный для лучшей читаемости текста
+    transition: 'all 0.2s ease'
   },
   bookTitle: {
     position: 'relative',
